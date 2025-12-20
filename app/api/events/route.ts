@@ -5,7 +5,16 @@ import Event from "@/databse/event.model"
 
 
 export async function GET(req:NextRequest){
-    return NextResponse.json("success response!")
+    try {
+        await connectDB();
+
+        const events = await Event.find().sort({createdAt: -1})
+
+        return NextResponse.json({message: 'Event Fetched Successfully', events},{status: 200});
+    }
+    catch (e){
+        return NextResponse.json({message: 'Event Fetching Failed', error: e}, {status: 500});
+    }
 }
 
 export async function POST(req:NextRequest){
