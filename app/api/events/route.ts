@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import connectDB from "@/lib/mongodb";
 import Event from "@/databse/event.model"
 
+
 export async function GET(req:NextRequest){
     return NextResponse.json("success response!")
 }
