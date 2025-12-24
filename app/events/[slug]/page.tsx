@@ -74,14 +74,14 @@ const EventDetailsPage = async({params}: {params: Promise<{slug: string}>}) => {
                         <EventDetailItem icon={'/icons/audience.svg'} alt={'audience'} label={audience}/>
                     </section>
 
-                    <EventAgenda agendaItems={JSON.parse(agenda[0])} />
+                    <EventAgenda agendaItems={agenda} />
 
                     <section className="flex-col-gap-2">
                         <h2>About the Organizer</h2>
                         <p>{organizer}</p>
                     </section>
 
-                    <EventTags tags={JSON.parse(tags[0])} />
+                    <EventTags tags={tags} />
                 </div>
 
                 {/*right side - booking event*/}
@@ -106,7 +106,7 @@ const EventDetailsPage = async({params}: {params: Promise<{slug: string}>}) => {
                 <h2>Similar Events</h2>
                 <div className="events">
                     {similarEvents.length > 0 && similarEvents.map((similarEvent: IEvent) => (
-                        <EventCard key={similarEvent.title} {...similarEvent} />
+                        <EventCard key={similarEvent.slug} {...similarEvent} />
                     ))}
                 </div>
             </div>
