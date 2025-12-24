@@ -32,6 +32,10 @@ export async function POST(req:NextRequest){
             return NextResponse.json({message: 'Invalid JSON format'}, {status: 400});
         }
 
+        //parsing form data
+        let tags = JSON.parse(formData.get('tags') as string);
+        let agenda = JSON.parse(formData.get('agenda') as string);
+
         // upload images to cloudinary
         const file = formData.get('image') as File;
 
@@ -53,7 +57,11 @@ export async function POST(req:NextRequest){
         event.image = (uploadResult as { secure_url: string }).secure_url;
 
         //insert new event data into database
-        const createdEvent = await Event.create(event);
+        const createdEvent = await Event.create({
+            ...event,
+            tags: tags,
+            agenda:agenda
+        });
 
         return NextResponse.json({message: 'Event created successfully', event: createdEvent}, {status:201});
     }
