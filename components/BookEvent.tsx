@@ -2,6 +2,7 @@
 
 import {useState} from "react";
 import {createBooking} from "@/lib/booking.actions";
+import posthog from 'posthog-js'
 
 
 const BookEvent = ({eventId, slug}: {eventId:string, slug:string}) => {
@@ -13,8 +14,10 @@ const BookEvent = ({eventId, slug}: {eventId:string, slug:string}) => {
 
         if(success){
             setSubmitted(true);
+            posthog.capture('event_booked',{eventId, slug, email})
         }else{
             console.log('Booking creation failed', error)
+            posthog.captureException(error)
         }
     }
 
